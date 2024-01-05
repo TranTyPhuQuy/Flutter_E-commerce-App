@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop/components/default_button.dart';
+import 'package:e_commerce_app/components/default_button.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';

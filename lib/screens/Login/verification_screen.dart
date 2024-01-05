@@ -1,11 +1,11 @@
+import 'package:e_commerce_app/screens/sign_up/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_shop/Common/Widgets/app_button.dart';
-import 'package:smart_shop/Common/Widgets/gradient_header.dart';
-import 'package:smart_shop/Screens/Login/phone_screen.dart';
-import 'package:smart_shop/Screens/SignUp/sign_up.dart';
-import 'package:smart_shop/Utils/app_colors.dart';
-import 'package:smart_shop/Utils/font_styles.dart';
+import 'package:e_commerce_app/Common/Widgets/app_button.dart';
+import 'package:e_commerce_app/Common/Widgets/gradient_header.dart';
+import 'package:e_commerce_app/Screens/Login/phone_screen.dart';
+import 'package:e_commerce_app/Utils/app_colors.dart';
+import 'package:e_commerce_app/Utils/font_styles.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 
 class Verification extends StatelessWidget {
@@ -96,7 +96,7 @@ class Verification extends StatelessWidget {
           color: AppColors.secondary,
           text: 'Continue',
           onTap: () {
-            Navigator.pushReplacementNamed(context, SignUp.routeName);
+            Navigator.pushReplacementNamed(context, SignUpScreen.routeName);
           }),
     );
   }

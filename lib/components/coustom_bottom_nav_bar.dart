@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:smart_shop/screens/Home/home.dart';
-import 'package:smart_shop/screens/Profile/profile.dart';
-import 'package:smart_shop/constants.dart';
+import 'package:e_commerce_app/screens/Home/home.dart';
+import 'package:e_commerce_app/screens/Profile/profile.dart';
+import 'package:e_commerce_app/constants.dart';
 
 import '../enums.dart';
 

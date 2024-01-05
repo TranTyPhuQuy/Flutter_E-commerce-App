@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop/Utils/app_colors.dart';
+import 'package:e_commerce_app/Utils/app_colors.dart';
 
 class AppTitle extends StatelessWidget {
   const AppTitle({this.marginTop, Key? key, this.fontStyle}) : super(key: key);
@@ -11,7 +11,7 @@ class AppTitle extends StatelessWidget {
       margin: EdgeInsets.only(top: marginTop!),
       child: RichText(
         text: TextSpan(
-          text: 'Smart',
+          text: 'Furniture ',
           style: fontStyle!.copyWith(color: AppColors.secondary),
           children: [
             TextSpan(

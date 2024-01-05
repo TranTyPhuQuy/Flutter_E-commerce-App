@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop/Common/Widgets/custom_app_bar.dart';
-import 'package:smart_shop/Utils/Constants/app_constants.dart';
-import 'package:smart_shop/Utils/font_styles.dart';
+import 'package:e_commerce_app/Common/Widgets/custom_app_bar.dart';
+import 'package:e_commerce_app/Utils/Constants/app_constants.dart';
+import 'package:e_commerce_app/Utils/font_styles.dart';
 
 class PrivacyPolicy extends StatelessWidget {
   static const String routeName = 'privacypolicy';
@@ -21,7 +21,7 @@ class PrivacyPolicy extends StatelessWidget {
           Size(double.infinity, MediaQuery.of(context).size.height * .20),
       child: CustomAppBar(
         isHome: false,
-        title: 'Privacy Policy',
+        title: 'Chính sách bảo mật',
         fixedHeight: 88.0,
         enableSearchField: false,
         leadingIcon: Icons.arrow_back,

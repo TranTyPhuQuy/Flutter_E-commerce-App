@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop/Utils/app_colors.dart';
+import 'package:e_commerce_app/Utils/app_colors.dart';
 
 class AppTextField extends StatefulWidget {
   const AppTextField({this.hintText, this.labelText, this.onTap, Key? key})

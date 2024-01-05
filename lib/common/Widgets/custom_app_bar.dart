@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop/Utils/app_colors.dart';
-import 'package:smart_shop/Utils/font_styles.dart';
+import 'package:e_commerce_app/Utils/app_colors.dart';
+import 'package:e_commerce_app/Utils/font_styles.dart';
 import 'app_title.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -126,31 +126,35 @@ class _CustomAppBarState extends State<CustomAppBar> {
   }
 
   Widget _buildSearchField(BuildContext context) {
-    return Container(
-      height: 44.h,
-      width: 335.w,
-      decoration: BoxDecoration(
-          color: AppColors.white, borderRadius: BorderRadius.circular(50.0.r)),
-      margin: const EdgeInsets.all(20.0),
-      child: TextField(
-        decoration: InputDecoration(
-          prefixIcon: const Icon(
-            Icons.search,
-            color: Colors.grey,
-          ),
-          hintText: 'What are you looking for?',
-          hintStyle: const TextStyle(
-            color: Colors.grey,
-          ),
-          fillColor: AppColors.white,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(50.0.r),
-            borderSide: const BorderSide(color: AppColors.white),
-          ),
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
+  return Container(
+    height: 44.h,
+    width: 335.w,
+    decoration: BoxDecoration(
+        color: AppColors.white, borderRadius: BorderRadius.circular(50.0.r)),
+    margin: const EdgeInsets.all(20.0),
+    child: TextField(
+      onSubmitted: (query) {
+        // showSearch(context: context, delegate: CustomSearchDelegate());
+      },
+      decoration: InputDecoration(
+        prefixIcon: const Icon(
+          Icons.search,
+          color: Colors.grey,
         ),
+        hintText: 'Tìm kiếm...',
+        hintStyle: const TextStyle(
+          color: Colors.grey,
+        ),
+        fillColor: AppColors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(50.0.r),
+          borderSide: const BorderSide(color: AppColors.white),
+        ),
+        focusedBorder: InputBorder.none,
+        enabledBorder: InputBorder.none,
       ),
-    );
-  }
+    ),
+  );
+}
+
 }

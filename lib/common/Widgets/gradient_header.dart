@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_shop/Utils/app_colors.dart';
-import 'package:smart_shop/Utils/font_styles.dart';
+import 'package:e_commerce_app/Utils/app_colors.dart';
+import 'package:e_commerce_app/Utils/font_styles.dart';
 
 class AppHeaderGradient extends StatelessWidget {
   const AppHeaderGradient(

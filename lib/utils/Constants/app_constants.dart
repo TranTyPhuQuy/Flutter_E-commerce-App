@@ -1,30 +1,35 @@
+import 'package:e_commerce_app/admin/screens/Categories/add_category.dart';
+import 'package:e_commerce_app/admin/screens/Categories/all_categories_screen.dart';
+import 'package:e_commerce_app/admin/screens/Products/add_product_screen.dart';
+import 'package:e_commerce_app/admin/screens/Products/all_products_screen.dart';
+import 'package:e_commerce_app/admin/screens/Categories/update_category_screen.dart';
+import 'package:e_commerce_app/admin/screens/Products/update_product_screen.dart';
+import 'package:e_commerce_app/admin/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:smart_shop/Screens/Cart/cart.dart';
-import 'package:smart_shop/Screens/Catalogue/catalogue.dart';
-import 'package:smart_shop/Screens/CheckOut/check_out.dart';
-import 'package:smart_shop/Screens/Favorite/favorite.dart';
-import 'package:smart_shop/Screens/Filter/filter.dart';
-import 'package:smart_shop/Screens/Home/home.dart';
-import 'package:smart_shop/Screens/Items/items.dart';
-import 'package:smart_shop/Screens/Login/phone_screen.dart';
-import 'package:smart_shop/Screens/Login/verification_screen.dart';
-import 'package:smart_shop/Screens/Main/main.dart';
-import 'package:smart_shop/Screens/Notifications/notifications.dart';
-import 'package:smart_shop/Screens/Onboarding/onboarding.dart';
-import 'package:smart_shop/Screens/Orders/order.dart';
-import 'package:smart_shop/Screens/PrivacyPolicy/privacy_policy.dart';
-import 'package:smart_shop/Screens/Profile/profile.dart';
-import 'package:smart_shop/Screens/Settings/settings.dart';
-import 'package:smart_shop/Screens/ShippingAddress/shipping_address.dart';
-import 'package:smart_shop/Screens/SignUp/sign_up.dart';
-import 'package:smart_shop/admin/screens/AdminCategory/add_category.dart';
-import 'package:smart_shop/screens/Product/product_screen.dart';
-import 'package:smart_shop/screens/forgot_password/forgot_password_screen.dart';
-import 'package:smart_shop/screens/login_success/login_success_screen.dart';
-import 'package:smart_shop/screens/sign_in/sign_in_screen.dart';
-import 'package:smart_shop/screens/sign_up/sign_up_screen.dart';
-import 'package:smart_shop/screens/splash/splash_screen.dart';
+import 'package:e_commerce_app/Screens/Cart/cart.dart';
+import 'package:e_commerce_app/Screens/Catalogue/catalogue.dart';
+import 'package:e_commerce_app/Screens/CheckOut/check_out.dart';
+import 'package:e_commerce_app/Screens/Favorite/favorite.dart';
+import 'package:e_commerce_app/Screens/Filter/filter.dart';
+import 'package:e_commerce_app/Screens/Home/home.dart';
+import 'package:e_commerce_app/Screens/Items/items.dart';
+import 'package:e_commerce_app/Screens/Login/phone_screen.dart';
+import 'package:e_commerce_app/Screens/Login/verification_screen.dart';
+import 'package:e_commerce_app/Screens/Main/main.dart';
+import 'package:e_commerce_app/Screens/Notifications/notifications.dart';
+import 'package:e_commerce_app/Screens/Onboarding/onboarding.dart';
+import 'package:e_commerce_app/Screens/Orders/order.dart';
+import 'package:e_commerce_app/Screens/PrivacyPolicy/privacy_policy.dart';
+import 'package:e_commerce_app/Screens/Profile/profile.dart';
+import 'package:e_commerce_app/Screens/Settings/settings.dart';
+import 'package:e_commerce_app/Screens/ShippingAddress/shipping_address.dart';
+import 'package:e_commerce_app/screens/Product/product_screen.dart';
+import 'package:e_commerce_app/screens/forgot_password/forgot_password_screen.dart';
+import 'package:e_commerce_app/screens/login_success/login_success_screen.dart';
+import 'package:e_commerce_app/screens/sign_in/sign_in_screen.dart';
+import 'package:e_commerce_app/screens/sign_up/sign_up_screen.dart';
+import 'package:e_commerce_app/screens/splash/splash_screen.dart';
 
 class AppConstants {
   static Map<String, Widget Function(dynamic)> appRoutes = {
@@ -41,7 +46,6 @@ class AppConstants {
     Profile.routeName: (_) => const Profile(),
     Cart.routeName: (_) => const Cart(),
     CheckOut.routeName: (_) => const CheckOut(),
-    SignUp.routeName: (_) => const SignUp(),
     Settings.routeName: (_) => const Settings(),
     Orders.routeName: (_) => const Orders(),
     PrivacyPolicy.routeName: (_) => const PrivacyPolicy(),
@@ -53,7 +57,13 @@ class AppConstants {
     ForgotPasswordScreen.routeName: (_) => const ForgotPasswordScreen(),
     LoginSuccessScreen.routeName: (_) => const LoginSuccessScreen(),
     SignUpScreen.routeName: (_) => const SignUpScreen(),
-    AddCategoryScreen.routeName: (_) => const AddCategoryScreen()
+    AddCategoryScreen.routeName: (_) => const AddCategoryScreen(),
+    DashBoardScreen.routeName: (_) => const DashBoardScreen(),
+    ALLCategoriesScreen.routeName: (_) => const ALLCategoriesScreen(),
+    ALLProductsScreen.routeName: (_) => const ALLProductsScreen(),
+    UpdateCategoryScreen.routeName: (_) => const UpdateCategoryScreen(),
+    UpdateProductScreen.routeName: (_) => const UpdateProductScreen(),
+    AddProductScreen.routeName: (_) => const AddProductScreen()
   };
 
   static setSystemStyling() {

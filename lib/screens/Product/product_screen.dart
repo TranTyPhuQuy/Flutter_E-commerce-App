@@ -1,23 +1,22 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce_app/common/Widgets/item_widget.dart';
+import 'package:e_commerce_app/data/init_data.dart';
+import 'package:e_commerce_app/models/carrt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_shop/Common/Widgets/app_button.dart';
-import 'package:smart_shop/Common/Widgets/cart_tile.dart';
-import 'package:smart_shop/Common/Widgets/item_widget.dart';
-import 'package:smart_shop/Common/Widgets/shimmer_effect.dart';
-import 'package:smart_shop/Utils/app_colors.dart';
-import 'package:smart_shop/Utils/font_styles.dart';
-import 'package:smart_shop/utils/baseurl.dart';
-import 'package:smart_shop/models/product.dart';
+import 'package:provider/provider.dart';
+import 'package:e_commerce_app/Common/Widgets/app_button.dart';
+import 'package:e_commerce_app/Common/Widgets/shimmer_effect.dart';
+import 'package:e_commerce_app/Utils/app_colors.dart';
+import 'package:e_commerce_app/Utils/font_styles.dart';
+import 'package:e_commerce_app/utils/baseurl.dart';
+import 'package:e_commerce_app/models/product.dart';
 
 // ignore: must_be_immutable
 class ProductScreen extends StatelessWidget {
   static const String routeName = 'product_screen';
   ProductScreen({Key? key}) : super(key: key);
-  Product? product;
+  late Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -28,37 +27,10 @@ class ProductScreen extends StatelessWidget {
       backgroundColor: AppColors.whiteLight,
       body: _buildBody(context),
       bottomSheet: _buildBottomSheet(
-          context: context,
-          onTap: () {
-            _buildCartModalSheet(context);
-          }),
+        context: context,
+      ),
     );
   }
-
-  // Future<void> getProductById(String productId) async {
-  //   final response = await http.get(Uri.parse(
-  //       'http://localhost/api/products/getProductsById?productId=$productId'));
-
-  //   if (response.statusCode == 200) {
-  //     // Nếu máy chủ trả về mã phản hồi 200 OK,
-  //     // sau đó chúng ta phân tích cú pháp dữ liệu JSON.
-  //     var data = jsonDecode(response.body);
-  //     if (data['productId'] != '') {
-  //       product = Product(
-  //           productId: data['productId'],
-  //           name: data['name'],
-  //           price: data['price'],
-  //           image: data['image'],
-  //           description: data['description'],
-  //           cateId: data['cateId'],
-  //           featured: data['featured']);
-  //     }
-  //     return jsonDecode(response.body);
-  //   } else {
-  //     // Nếu rằng yêu cầu không thành công, hãy ném một ngoại lệ.
-  //     throw Exception('Failed to load product');
-  //   }
-  // }
 
   Widget _buildBody(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -73,7 +45,7 @@ class ProductScreen extends StatelessWidget {
             pinned: false,
             flexibleSpace: FlexibleSpaceBar(
               background: CachedNetworkImage(
-                imageUrl: baseUrl + product!.image!,
+                imageUrl: baseUrl + product.image,
                 // color: const Color.fromRGBO(42, 3, 75, 0.35),
                 // colorBlendMode: BlendMode.srcOver,
                 fit: BoxFit.cover,
@@ -105,13 +77,9 @@ class ProductScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  _buildColorAndSizeSelection(context),
-                  SizedBox(height: 10.0.h),
                   _buildProductDetail(context),
                   SizedBox(height: 10.0.h),
-                  _buildReviews(context),
-                  SizedBox(height: 10.0.h),
-                  // _buildRelatedProduct(context)
+                  _buildRelatedProduct(context)
                 ],
               ),
             ),
@@ -144,11 +112,12 @@ class ProductScreen extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20.0.w),
-            child: Text(product!.name!,
+            child: Text(
+              product.name,
               style: FontStyles.montserratRegular19(),
             ),
           ),
-          _buildPrice(context, product!.getPriceVND()),
+          _buildPrice(context, product.getPriceVND()),
         ],
       ),
     );
@@ -179,22 +148,6 @@ class ProductScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildColorAndSizeSelection(BuildContext context) {
-    return Container(
-      color: AppColors.white,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0.h, vertical: 20.0.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildColorSelection(context),
-            SizedBox(height: 20.0.h),
-            _buildSizes(context),
-          ],
-        ),
-      ),
-    );
-  }
 
   Widget _buildPrice(BuildContext context, String price) {
     return Padding(
@@ -205,249 +158,74 @@ class ProductScreen extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildColorSelection(BuildContext context) {
-    List<String> colors = [
-      'assets/product/pic1.png',
-      'assets/product/pic2.png',
-      'assets/product/pic3.png',
-      'assets/product/pic4.png',
-      'assets/product/pic5.png',
-      'assets/product/pic6.png',
-    ];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          'Colors',
-          style: FontStyles.montserratSemiBold14(),
-        ),
-        SizedBox(height: 20.0.h),
-        SizedBox(
-          height: 47.0.h,
-          child: ListView.separated(
-            itemCount: colors.length,
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return Container(
-                height: 47.h,
-                width: 47.w,
-                decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage(colors[index])),
-                    borderRadius: BorderRadius.circular(10.0.r)),
-              );
-            },
-            separatorBuilder: (context, index) {
-              return SizedBox(width: 10.0.w);
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSizes(BuildContext context) {
-    List<String> titles = ['XXS', 'XS', 'S', 'M', 'L', 'XL'];
-    return Column(
+Widget _buildProductDetail(BuildContext context) {
+  return Container(
+    decoration: BoxDecoration(
+      color: AppColors.white,
+      borderRadius: BorderRadius.circular(10.0.r),
+    ),
+    padding: const EdgeInsets.all(20.0),
+    child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Sizes',
-          style: FontStyles.montserratSemiBold14(),
+          'Mô tả sản phẩm',
+          style: FontStyles.montserratBold19(),
         ),
-        SizedBox(height: 20.0.h),
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: 50.0.h,
-          child: ListView.builder(
-            itemCount: titles.length,
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return Container(
-                margin: EdgeInsets.only(right: 10.0.w),
-                padding: EdgeInsets.symmetric(horizontal: 15.0.w),
-                decoration: BoxDecoration(
-                    color: index == 0 ? AppColors.secondary : AppColors.white,
-                    borderRadius: BorderRadius.circular(5.0.r)),
-                child: Center(
-                  child: Text(
-                    titles[index],
-                    style: FontStyles.montserratRegular14().copyWith(
-                        color: index == 0
-                            ? AppColors.white
-                            : AppColors.textLightColor),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildProductDetail(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(10.0.r),
-      ),
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Product Detail',
-            style: FontStyles.montserratBold19(),
-          ),
-          SizedBox(height: 10.0.h),
-          Text(product!.description!, style: FontStyles.montserratRegular14(),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(Icons.keyboard_arrow_down_rounded),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildReviews(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: AppColors.white, borderRadius: BorderRadius.circular(10.0.r)),
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Reviews',
-                style: FontStyles.montserratBold19()
-                    .copyWith(color: const Color(0xFF34283E)),
-              ),
-              GestureDetector(
-                onTap: () {
-                  // Navigator.pushNamed(context, Catalogue.routeName);
-                },
-                child: Text(
-                  'See All',
-                  style: FontStyles.montserratBold12()
-                      .copyWith(color: const Color(0xFF9B9B9B)),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 10.0.h),
-          Text(
-            'Olha Chabanova',
-            style: FontStyles.montserratSemiBold14(),
-          ),
-          SizedBox(height: 10.0.h),
-          _buildReviewRatings(context),
-          SizedBox(height: 10.0.h),
-          Text(
-            'I’m old (rolling through my 50’s). But, this is my daughter in law’s favorite color right now.❤️ So I wear it whenever we hang out! She’s my fashion consultant who keeps me on trend🤣',
+        SizedBox(height: 10.0.h),
+        ExpansionTile(
+          title: Text(
+            'Xem thêm',
             style: FontStyles.montserratRegular14(),
           ),
-          SizedBox(height: 10.0.h),
-          Text(
-            '835 people found this helpful',
-            style: FontStyles.montserratRegular11(),
-          ),
-          SizedBox(height: 10.0.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Comment',
-                style: FontStyles.montserratRegular14()
-                    .copyWith(decoration: TextDecoration.underline),
-              ),
-              Row(
-                children: [
-                  Text(
-                    'Helpful',
-                    style: FontStyles.montserratRegular12(),
-                  ),
-                  SizedBox(width: 10.0.w),
-                  const Icon(Icons.thumb_up)
-                ],
-              )
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+          children: <Widget>[
+            Text(
+              product.description,
+              style: FontStyles.montserratRegular14(),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
 
-  Widget _buildReviewRatings(BuildContext context) {
-    return SizedBox(
-      height: 20.0.h,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+  Widget _buildRelatedProduct(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ListView.builder(
-              itemCount: 5,
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return const Icon(
-                  Icons.star,
-                  color: AppColors.secondary,
-                  size: 14.0,
-                );
-              }),
           Text(
-            'June 5,2021',
-            style: FontStyles.montserratRegular12(),
+            'Sản phẩm liên quan',
+            style: FontStyles.montserratBold19()
+                .copyWith(color: const Color(0xFF34283E)),
           ),
+          SizedBox(height: 10.0.h),
+          SizedBox(
+            height: 310.h,
+            // width: 200,
+            child: ListView.builder(
+                itemCount: InitData.LstProductRelated.length,
+                itemExtent: 180.0.w,
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return ItemWidget(
+                      image: InitData.LstProductRelated[index].image,
+                      name: InitData.LstProductRelated[index].name,
+                      price: InitData.LstProductRelated[index].getPriceVND(),
+                      favoriteIcon: true,
+                  );
+                }),
+          )
         ],
       ),
     );
   }
 
-  // Widget _buildRelatedProduct(BuildContext context) {
-  //   return Padding(
-  //     padding: const EdgeInsets.all(20.0),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         Text(
-  //           'Product related to this item',
-  //           style: FontStyles.montserratBold19()
-  //               .copyWith(color: const Color(0xFF34283E)),
-  //         ),
-  //         SizedBox(height: 10.0.h),
-  //         SizedBox(
-  //           // color: Colors.red,
-  //           height: 310.h,
-  //           // width: 200,
-  //           child: ListView.builder(
-  //               itemCount: 4,
-  //               itemExtent: 180.0.w,
-  //               scrollDirection: Axis.horizontal,
-  //               shrinkWrap: true,
-  //               itemBuilder: (context, index) {
-  //                 return ItemWidget(
-  //                   index: index,
-  //                   favoriteIcon: true,
-  //                 );
-  //               }),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  Widget _buildBottomSheet({BuildContext? context, Function()? onTap}) {
+  Widget _buildBottomSheet({BuildContext? context}) {
     return Container(
       width: double.infinity,
       height: 70.0.h,
@@ -465,92 +243,20 @@ class ProductScreen extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context!);
               },
-              child: const Icon(Icons.arrow_back)),
+              child: const Icon(Icons.arrow_back)
+              ),
           AppButton.button(
-            text: 'Add to cart',
+            text: 'Thêm vào giỏ hàng',
             color: AppColors.secondary,
             height: 48.0.h,
             width: 215.0.w,
-            onTap: onTap,
+            onTap: () {
+              Provider.of<Cartt>(context!,listen: false).addProduct(product);
+            },
           ),
-           widget.favoriteIcon!
-                ? Positioned(
-                    bottom: -15.0,
-                    right: 10.0,
-                    child: Container(
-                        height: 36.0,
-                        width: 36.0,
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(36.0),
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isFavorite = !isFavorite;
-                            });
-                          },
-                          child: Icon(
-                            isFavorite ? Icons.favorite : Icons.favorite_border,
-                            color:
-                                isFavorite ? AppColors.secondary : Colors.black,
-                          ),
-                        )),
-                  )
-                : const SizedBox(height: 0, width: 0),
+          const Icon(Icons.favorite_border),
         ],
       ),
     );
-  }
-
-  _buildCartModalSheet(BuildContext context) {
-    showModalBottomSheet(
-        backgroundColor: AppColors.white,
-        isScrollControlled: true,
-        shape: OutlineInputBorder(
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(20.0.r),
-                topLeft: Radius.circular(20.0.r))),
-        context: context,
-        builder: (_) {
-          return Container(
-            margin: const EdgeInsets.all(20.0),
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(20.0.r),
-                topLeft: Radius.circular(20.0.r),
-              ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Center(
-                  child: Container(
-                    height: 5.0.h,
-                    width: 60.0.w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0.r),
-                      color: AppColors.lightGray,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10.0.h),
-                CartTile(image: product!.image!, name: product!.name!, price: product!.getPriceVND(), favoriteIcon: true),
-                SizedBox(height: 10.0.h),
-                _buildColorSelection(context),
-                SizedBox(height: 10.0.h),
-                _buildSizes(context),
-                SizedBox(height: 10.0.h),
-                _buildBottomSheet(
-                    context: context,
-                    onTap: () {
-                      Navigator.pop(context);
-                    }),
-              ],
-            ),
-          );
-        });
   }
 }

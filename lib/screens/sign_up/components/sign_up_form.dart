@@ -1,30 +1,27 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:smart_shop/components/custom_surfix_icon.dart';
-import 'package:smart_shop/components/default_button.dart';
-import 'package:smart_shop/components/form_error.dart';
-import 'package:smart_shop/screens/Login/phone_screen.dart';
-import 'package:smart_shop/screens/complete_profile/complete_profile_screen.dart';
+import 'package:e_commerce_app/components/custom_surfix_icon.dart';
+import 'package:e_commerce_app/components/default_button.dart';
+import 'package:e_commerce_app/components/form_error.dart';
 import 'package:http/http.dart' as http;
-import 'package:smart_shop/screens/login_success/login_success_screen.dart';
-import 'package:smart_shop/screens/sign_in/sign_in_screen.dart';
-import 'package:smart_shop/utils/baseurl.dart';
+import 'package:e_commerce_app/screens/sign_in/sign_in_screen.dart';
+import 'package:e_commerce_app/utils/baseurl.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
-
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
 
   @override
-  _SignUpFormState createState() => _SignUpFormState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   late String email;
   late String password;
+  // ignore: non_constant_identifier_names
   late String conform_password;
 
   bool remember = false;
@@ -38,7 +35,7 @@ class _SignUpFormState extends State<SignUpForm> {
     }
   }
 
- void removeError({String error =""}) {
+  void removeError({String error = ""}) {
     if (errors.contains(error)) {
       setState(() {
         errors.remove(error);
@@ -60,13 +57,12 @@ class _SignUpFormState extends State<SignUpForm> {
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: "Continue",
+            text: "Tiếp tục",
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
                 RegistrationUser();
-                Navigator.pushNamed(context, SignInScreen.routeName);
               }
             },
           ),
@@ -99,9 +95,7 @@ class _SignUpFormState extends State<SignUpForm> {
       },
       decoration: const InputDecoration(
         labelText: "Confirm Password",
-        hintText: "Re-enter your password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        hintText: "Nhập lại mậy khẩu",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
       ),
@@ -132,7 +126,7 @@ class _SignUpFormState extends State<SignUpForm> {
       },
       decoration: const InputDecoration(
         labelText: "Password",
-        hintText: "Enter your password",
+        hintText: "Nhập mật khẩu",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -151,7 +145,7 @@ class _SignUpFormState extends State<SignUpForm> {
         } else if (emailValidatorRegExp.hasMatch(value)) {
           removeError(error: kInvalidEmailError);
         }
-        return null;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -173,19 +167,49 @@ class _SignUpFormState extends State<SignUpForm> {
       ),
     );
   }
-  Future RegistrationUser() async {
 
-    Map mapeddate = {
-      'email': email,
-      'password': password
-    };
+  // ignore: non_constant_identifier_names
+  Future RegistrationUser() async {
+    Map mapeddate = {'email': email, 'password': password};
 
     print("JSON DATA: ${mapeddate}");
 
-    http.Response response = await http.post(Uri.parse(baseUrl+"users"),body: mapeddate);
-    
-    var data = jsonDecode(response.body);
+    http.Response response =
+        await http.post(Uri.parse("${baseUrl}users"), body: mapeddate);
 
-    print("DATA: ${data}");
+    var data = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      if (data['success']) {
+        // ignore: use_build_context_synchronously
+        Navigator.pushNamed(context, SignInScreen.routeName);
+      } else {
+        // ignore: use_build_context_synchronously
+        showSuccessDialog(
+            context, 'Đăng ký thất bại', 'Email đã tồn tại');
+      }
+      print("DATA: ${data}");
+    } else {
+        // ignore: use_build_context_synchronously
+        showSuccessDialog(context, 'Đăng nhập thất bại', 'Lỗi kết nối với máy chủ');
+    }
+  }
+
+  void showSuccessDialog(BuildContext context, title, content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: <Widget>[
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Đóng'))
+          ],
+        );
+      },
+    );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop/components/no_account_text.dart';
-import 'package:smart_shop/components/socal_card.dart';
+import 'package:e_commerce_app/components/no_account_text.dart';
 import '../../../size_config.dart';
 import 'sign_form.dart';
 
@@ -9,7 +8,8 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return 
+    SafeArea(
       child: SizedBox(
         width: double.infinity,
         child: Padding(
@@ -20,7 +20,7 @@ class Body extends StatelessWidget {
               children: [
                 SizedBox(height: SizeConfig.screenHeight! * 0.04),
                 Text(
-                  "Welcome Back",
+                  "Chào mừng quay trở lại",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: getProportionateScreenWidth(28),
@@ -28,29 +28,12 @@ class Body extends StatelessWidget {
                   ),
                 ),
                 const Text(
-                  "Sign in with your email and password  \n or continue with social media",
+                  "Đăng nhập với email và mật khẩu",
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: SizeConfig.screenHeight! * 0.08),
                 const SignForm(),
                 SizedBox(height: SizeConfig.screenHeight! * 0.08),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SocalCard(
-                      icon: "assets/icons/google-icon.svg",
-                      press: () {},
-                    ),
-                    SocalCard(
-                      icon: "assets/icons/facebook-2.svg",
-                      press: () {},
-                    ),
-                    SocalCard(
-                      icon: "assets/icons/twitter.svg",
-                      press: () {},
-                    ),
-                  ],
-                ),
                 SizedBox(height: getProportionateScreenHeight(20)),
                 const NoAccountText(),
               ],

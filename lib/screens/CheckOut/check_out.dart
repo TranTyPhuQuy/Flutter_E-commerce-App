@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_shop/Common/Widgets/app_button.dart';
-import 'package:smart_shop/Common/Widgets/custom_app_bar.dart';
-import 'package:smart_shop/Screens/Orders/order.dart';
-import 'package:smart_shop/Utils/app_colors.dart';
-import 'package:smart_shop/Utils/font_styles.dart';
+import 'package:e_commerce_app/Common/Widgets/app_button.dart';
+import 'package:e_commerce_app/Common/Widgets/custom_app_bar.dart';
+import 'package:e_commerce_app/Screens/Orders/order.dart';
+import 'package:e_commerce_app/Utils/app_colors.dart';
+import 'package:e_commerce_app/Utils/font_styles.dart';
 
 class CheckOut extends StatelessWidget {
   static const String routeName = 'checkout';
@@ -26,7 +26,7 @@ class CheckOut extends StatelessWidget {
           Size(double.infinity, MediaQuery.of(context).size.height * .20.h),
       child: CustomAppBar(
         isHome: false,
-        title: 'Check Out',
+        title: 'Thanh toán',
         fixedHeight: 88.0.h,
         enableSearchField: false,
         leadingIcon: Icons.arrow_back,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop/components/custom_surfix_icon.dart';
-import 'package:smart_shop/components/default_button.dart';
-import 'package:smart_shop/components/form_error.dart';
-import 'package:smart_shop/screens/otp/otp_screen.dart';
+import 'package:e_commerce_app/components/custom_surfix_icon.dart';
+import 'package:e_commerce_app/components/default_button.dart';
+import 'package:e_commerce_app/components/form_error.dart';
+import 'package:e_commerce_app/screens/otp/otp_screen.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';

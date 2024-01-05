@@ -1,11 +1,14 @@
+import 'package:e_commerce_app/helper/format_price.dart';
+import 'package:e_commerce_app/models/carrt.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_shop/Screens/Cart/cart.dart';
-import 'package:smart_shop/Screens/Catalogue/catalogue.dart';
-import 'package:smart_shop/Screens/Favorite/favorite.dart';
-import 'package:smart_shop/Screens/Home/home.dart';
-import 'package:smart_shop/Screens/Profile/profile.dart';
-import 'package:smart_shop/Utils/app_colors.dart';
-import 'package:smart_shop/Utils/font_styles.dart';
+import 'package:provider/provider.dart';
+import 'package:e_commerce_app/Screens/Cart/cart.dart';
+import 'package:e_commerce_app/Screens/Catalogue/catalogue.dart';
+import 'package:e_commerce_app/Screens/Favorite/favorite.dart';
+import 'package:e_commerce_app/Screens/Home/home.dart';
+import 'package:e_commerce_app/Screens/Profile/profile.dart';
+import 'package:e_commerce_app/Utils/app_colors.dart';
+import 'package:e_commerce_app/Utils/font_styles.dart';
 
 import '../../size_config.dart';
 
@@ -14,7 +17,7 @@ class Main extends StatefulWidget {
   static const String routeName = 'main';
 
   @override
-  _MainState createState() => _MainState();
+  State<Main> createState() => _MainState();
 }
 
 class _MainState extends State<Main> {
@@ -30,55 +33,8 @@ class _MainState extends State<Main> {
     SizeConfig().init(context);
     return Scaffold(
       body: myScreens.elementAt(currentIndex),
-      // bottomNavigationBar: buildBottomNavigation(),
       bottomSheet: buildBottomSheet(),
       resizeToAvoidBottomInset: false,
-    );
-  }
-
-  Widget buildBottomNavigation() {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      items: const [
-        BottomNavigationBarItem(
-            icon: Image(
-              image: AssetImage(
-                'assets/bottomBarIcons/home 1.png',
-              ),
-            ),
-            label: 'Home',
-            tooltip: 'Home'),
-        BottomNavigationBarItem(
-            icon: Image(
-              image: AssetImage(
-                'assets/bottomBarIcons/view-grid 3.png',
-              ),
-            ),
-            label: 'Catalogue',
-            tooltip: 'Catalogue'),
-        BottomNavigationBarItem(
-            icon: Image(
-              image: AssetImage(
-                'assets/bottomBarIcons/heart 2.png',
-              ),
-            ),
-            label: 'Favorite',
-            tooltip: 'Favorite'),
-        BottomNavigationBarItem(
-            icon: Image(
-              image: AssetImage(
-                'assets/bottomBarIcons/user 2.png',
-              ),
-            ),
-            label: 'Profile',
-            tooltip: 'Profile'),
-      ],
-      selectedItemColor: AppColors.primaryDark,
-      onTap: (value) {
-        setState(() {
-          // currentIndex = value;
-        });
-      },
     );
   }
 
@@ -142,7 +98,7 @@ class _MainState extends State<Main> {
                                   : Colors.grey,
                             ),
                             Text(
-                              'Catalogue',
+                              'Danh mục',
                               style: TextStyle(
                                 color: currentIndex == 1
                                     ? Colors.black
@@ -167,7 +123,7 @@ class _MainState extends State<Main> {
                                   : Colors.grey,
                             ),
                             Text(
-                              'Favorite',
+                              'Yêu thích',
                               style: TextStyle(
                                 color: currentIndex == 2
                                     ? Colors.black
@@ -212,57 +168,56 @@ class _MainState extends State<Main> {
             ],
           ),
           Positioned(
-            right: 0.0,
-            bottom: 15.0,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, Cart.routeName);
-              },
-              child: Container(
-                width: 116.0,
-                height: 56,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors:  [
-                      AppColors.primaryLight,
-                      AppColors.primaryDark
-                    ],
-                    end: Alignment.bottomLeft,
-                    begin: Alignment.topRight,
-                    stops:  [0, 1],
-                  ),
-                  color: AppColors.primaryDark,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    bottomLeft: Radius.circular(30.0),
-                  ),
-                ),
-                child: ListTile(
-                  contentPadding: const EdgeInsets.only(left: 10.0),
-                  minLeadingWidth: 10.0,
-                  leading: const Icon(
-                    Icons.shopping_cart,
-                    color: AppColors.white,
-                    size: 21.0,
-                  ),
-                  title: RichText(
-                    text: TextSpan(
-                      text: '\$239.98\n',
-                      style: FontStyles.montserratBold17()
-                          .copyWith(fontSize: 11.0, color: AppColors.white),
-                      children: [
-                        TextSpan(
-                          text: '2 Items',
-                          style: FontStyles.montserratRegular14()
-                              .copyWith(fontSize: 11.0, color: AppColors.white),
-                        )
-                      ],
+              right: 0.0,
+              bottom: 15.0,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, Cart.routeName);
+                },
+                child: Container(
+                    width: 116.0,
+                    height: 56,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [AppColors.primaryLight, AppColors.primaryDark],
+                        end: Alignment.bottomLeft,
+                        begin: Alignment.topRight,
+                        stops: [0, 1],
+                      ),
+                      color: AppColors.primaryDark,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30.0),
+                        bottomLeft: Radius.circular(30.0),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+                    child: ListTile(
+                        contentPadding: const EdgeInsets.only(left: 10.0),
+                        minLeadingWidth: 10.0,
+                        leading: const Icon(
+                          Icons.shopping_cart,
+                          color: AppColors.white,
+                          size: 21.0,
+                        ),
+                        title:
+                          Consumer<Cartt>(builder: (context, value, child) {
+                            return RichText(
+                              text: TextSpan(
+                                text: '${FormartPrice.getPriceVND(value.getTotalPrice())}\n',
+                                style: FontStyles.montserratBold17().copyWith(
+                                    fontSize: 11.0, color: AppColors.white),
+                                children: [
+                                  TextSpan(
+                                    text: '${value.getCounter().toString()} Sản phẩm',
+                                    style: FontStyles.montserratRegular14()
+                                        .copyWith(
+                                            fontSize: 11.0,
+                                            color: AppColors.white),
+                                  )
+                                ],
+                              ),
+                            );
+                        }))),
+              )),
         ],
       ),
     );

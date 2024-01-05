@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop/constants.dart';
-import 'package:smart_shop/screens/sign_up/sign_up_screen.dart';
-import 'package:smart_shop/size_config.dart';
+import 'package:e_commerce_app/constants.dart';
+import 'package:e_commerce_app/screens/sign_up/sign_up_screen.dart';
+import 'package:e_commerce_app/size_config.dart';
 
 
 class NoAccountText extends StatelessWidget {
@@ -15,13 +15,13 @@ class NoAccountText extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Don’t have an account? ",
+          "Chưa có tài khoản? ",
           style: TextStyle(fontSize: getProportionateScreenWidth(16)),
         ),
         GestureDetector(
           onTap: () => Navigator.pushNamed(context, SignUpScreen.routeName),
           child: Text(
-            "Sign Up",
+            "Đăng ký",
             style: TextStyle(
                 fontSize: getProportionateScreenWidth(16),
                 color: kPrimaryColor),

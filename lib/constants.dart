@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop/size_config.dart';
+import 'package:e_commerce_app/size_config.dart';
 
 const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);
@@ -33,6 +33,8 @@ const String kMatchPassError = "Passwords don't match";
 const String kNamelNullError = "Please Enter your name";
 const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kAddressNullError = "Please Enter your address";
+const String kNameCategoryNullError = "Vui lòng nhập tên danh mục";
+const String kDescriptionNullError = "Vui lòng nhập mô tả";
 
 final otpInputDecoration = InputDecoration(
   contentPadding:

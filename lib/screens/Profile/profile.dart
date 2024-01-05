@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_shop/Common/Widgets/gradient_header.dart';
-import 'package:smart_shop/Screens/Onboarding/onboarding.dart';
-import 'package:smart_shop/Screens/Orders/order.dart';
-import 'package:smart_shop/Screens/PrivacyPolicy/privacy_policy.dart';
-import 'package:smart_shop/Screens/Settings/settings.dart';
-import 'package:smart_shop/Screens/ShippingAddress/shipping_address.dart';
-import 'package:smart_shop/Screens/SignUp/sign_up.dart';
-import 'package:smart_shop/Utils/app_colors.dart';
-import 'package:smart_shop/Utils/font_styles.dart';
+import 'package:e_commerce_app/Common/Widgets/gradient_header.dart';
+import 'package:e_commerce_app/Screens/Onboarding/onboarding.dart';
+import 'package:e_commerce_app/Screens/Orders/order.dart';
+import 'package:e_commerce_app/Screens/PrivacyPolicy/privacy_policy.dart';
+import 'package:e_commerce_app/Screens/Settings/settings.dart';
+import 'package:e_commerce_app/Screens/ShippingAddress/shipping_address.dart';
+import 'package:e_commerce_app/Utils/app_colors.dart';
+import 'package:e_commerce_app/Utils/font_styles.dart';
+import 'package:e_commerce_app/screens/sign_up/sign_up_screen.dart';
 
 class Profile extends StatelessWidget {
   static const String routeName = 'profile';
@@ -33,7 +33,7 @@ class Profile extends StatelessWidget {
               AppHeaderGradient(
                 isProfile: true,
                 fixedHeight: screenHeight * .24.h,
-                text: 'Oleh Chabanov',
+                text: 'nguyena',
               ),
               Positioned(
                 top: screenHeight * .14.h,
@@ -46,7 +46,7 @@ class Profile extends StatelessWidget {
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, SignUp.routeName);
+                      Navigator.pushReplacementNamed(context, SignUpScreen.routeName);
                     },
                     child: const Icon(
                       Icons.edit_outlined,
@@ -58,17 +58,17 @@ class Profile extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10.0.h),
-          _buildProfileTile(Icons.location_on_outlined, 'Shipping Address', () {
+          _buildProfileTile(Icons.location_on_outlined, 'Địa chỉ giao hàng', () {
             Navigator.pushNamed(context, ShippingAddress.routeName);
           }),
-          _buildProfileTile(Icons.payment_rounded, 'Payment Method', () {}),
+          _buildProfileTile(Icons.payment_rounded, 'Phương thức thanh toán', () {}),
           _buildProfileTile(Icons.border_all, 'Orders', () {
             Navigator.pushNamed(context, Orders.routeName);
           }),
-          _buildProfileTile(Icons.settings, 'Settings', () {
+          _buildProfileTile(Icons.settings, 'Cài đặt', () {
             Navigator.pushNamed(context, Settings.routeName);
           }),
-          _buildProfileTile(Icons.login_outlined, 'Logout', () {
+          _buildProfileTile(Icons.login_outlined, 'Đăng xuất', () {
             Navigator.pushReplacementNamed(context, OnBoarding.routeName);
           }),
           _buildPrivacy(context),
@@ -108,7 +108,7 @@ class Profile extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(left: 20.0.w, top: 10.0.h, bottom: 100.0.h),
         child: Text(
-          'Privacy Policy',
+          'Chính sách bảo mật',
           style: FontStyles.montserratRegular12().copyWith(
             decoration: TextDecoration.underline,
             color: AppColors.textLightColor,

@@ -1,26 +1,27 @@
 import 'package:intl/intl.dart';
+
 class Product {
-  int? productId;
-  String? name;
-  String? price;
-  String? image;
-  String? description;
-  int? cateId;
-  int? featured;
+  int productId;
+  String name;
+  double price;
+  String image;
+  String description;
+  int cateId;
+  int featured;
+  int quantity;
 
   Product(
-    {
-      this.productId,
-      this.name,
-      this.price,
-      this.image,
-      this.description,
-      this.cateId,
-      this.featured}
-    );
-    String getPriceVND() {
+      {
+      required this.productId,
+      required this.name,
+      required this.price,
+      required this.image,
+      required this.description,
+      required this.cateId,
+      required this.featured,
+      required this.quantity});
+  String getPriceVND() {
     final formatCurrency = NumberFormat.simpleCurrency(locale: 'vi_VN');
-    return formatCurrency.format(double.parse(price ?? '0')).toString();
-
+    return formatCurrency.format(price).toString();
   }
 }

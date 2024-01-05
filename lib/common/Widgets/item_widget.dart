@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_shop/Common/Widgets/shimmer_effect.dart';
-import 'package:smart_shop/Utils/app_colors.dart';
-import 'package:smart_shop/Utils/font_styles.dart';
-import 'package:smart_shop/utils/baseurl.dart';
+import 'package:e_commerce_app/Common/Widgets/shimmer_effect.dart';
+import 'package:e_commerce_app/Utils/app_colors.dart';
+import 'package:e_commerce_app/Utils/font_styles.dart';
+import 'package:e_commerce_app/utils/baseurl.dart';
 
 class ItemWidget extends StatefulWidget {
   const ItemWidget({this.image, this.name,this.price, this.favoriteIcon, Key? key})
@@ -145,6 +145,7 @@ class _ItemWidgetState extends State<ItemWidget> {
     var screenWidth = MediaQuery.of(context).size.width;
     return SizedBox(
       width: screenWidth * .40,
+      height: 50.0,
       child: SingleChildScrollView(
         child: Text(name,
           style: FontStyles.montserratRegular14().copyWith(
@@ -152,7 +153,6 @@ class _ItemWidgetState extends State<ItemWidget> {
           ),
           overflow: TextOverflow.clip,
         ),
-        physics: NeverScrollableScrollPhysics(),
       ),
     );
   }

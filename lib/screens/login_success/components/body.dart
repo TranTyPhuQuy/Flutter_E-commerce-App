@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop/components/default_button.dart';
-import 'package:smart_shop/screens/Home/home.dart';
-import 'package:smart_shop/screens/Main/main.dart';
+import 'package:e_commerce_app/components/default_button.dart';
+import 'package:e_commerce_app/screens/Main/main.dart';
 
 import '../../../size_config.dart';
 
@@ -19,7 +18,7 @@ class Body extends StatelessWidget {
         ),
         SizedBox(height: SizeConfig.screenHeight! * 0.08),
         Text(
-          "Login Success",
+          "Đăng nhập thành công",
           style: TextStyle(
             fontSize: getProportionateScreenWidth(30),
             fontWeight: FontWeight.bold,
@@ -30,7 +29,7 @@ class Body extends StatelessWidget {
         SizedBox(
           width: SizeConfig.screenWidth! * 0.6,
           child: DefaultButton(
-            text: "Back to home",
+            text: "Quay về trang chủ",
             press: () {
               Navigator.pushNamed(context, Main.routeName);
             },

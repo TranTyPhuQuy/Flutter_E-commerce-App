@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop/constants.dart';
-import 'package:smart_shop/size_config.dart';
+import 'package:e_commerce_app/constants.dart';
+import 'package:e_commerce_app/size_config.dart';
 
 class DefaultButton extends StatelessWidget {
   const DefaultButton({
@@ -16,9 +16,11 @@ class DefaultButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       height: getProportionateScreenHeight(56),
-      child: FlatButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        color: kPrimaryColor,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          backgroundColor: kPrimaryColor,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        ),
         onPressed: press as void Function()?,
         child: Text(
           text!,

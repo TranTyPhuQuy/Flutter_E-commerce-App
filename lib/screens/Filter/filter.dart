@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop/Common/Widgets/app_button.dart';
-import 'package:smart_shop/Common/Widgets/custom_app_bar.dart';
-import 'package:smart_shop/Utils/app_colors.dart';
-import 'package:smart_shop/Utils/font_styles.dart';
+import 'package:e_commerce_app/Common/Widgets/app_button.dart';
+import 'package:e_commerce_app/Common/Widgets/custom_app_bar.dart';
+import 'package:e_commerce_app/Utils/app_colors.dart';
+import 'package:e_commerce_app/Utils/font_styles.dart';
 
 class Filter extends StatefulWidget {
   static const String routeName = 'favorite';

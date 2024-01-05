@@ -1,23 +1,21 @@
+import 'package:e_commerce_app/admin/screens/dashboard_screen.dart';
+import 'package:e_commerce_app/data/init_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
-import 'package:flutter_carousel_slider/carousel_slider_indicators.dart';
-import 'package:flutter_carousel_slider/carousel_slider_transforms.dart';
-import 'package:smart_shop/Common/Widgets/app_title.dart';
-import 'package:smart_shop/Common/Widgets/catalogue_widget.dart';
-import 'package:smart_shop/Common/Widgets/custom_app_bar.dart';
-import 'package:smart_shop/Common/Widgets/item_widget.dart';
-import 'package:smart_shop/Screens/Catalogue/catalogue.dart';
-import 'package:smart_shop/Screens/Notifications/notifications.dart';
-import 'package:smart_shop/screens/Product/product_screen.dart';
-import 'package:smart_shop/Screens/Settings/settings.dart';
-import 'package:smart_shop/Utils/app_colors.dart';
-import 'package:smart_shop/Utils/font_styles.dart';
+import 'package:e_commerce_app/Common/Widgets/app_title.dart';
+import 'package:e_commerce_app/Common/Widgets/catalogue_widget.dart';
+import 'package:e_commerce_app/Common/Widgets/custom_app_bar.dart';
+import 'package:e_commerce_app/Common/Widgets/item_widget.dart';
+import 'package:e_commerce_app/Screens/Catalogue/catalogue.dart';
+import 'package:e_commerce_app/Screens/Notifications/notifications.dart';
+import 'package:e_commerce_app/screens/Product/product_screen.dart';
+import 'package:e_commerce_app/Screens/Settings/settings.dart';
+import 'package:e_commerce_app/Utils/app_colors.dart';
+import 'package:e_commerce_app/Utils/font_styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:smart_shop/admin/screens/AdminCategory/add_category.dart';
-import 'package:smart_shop/dummy/dummy_data.dart';
-import 'package:smart_shop/Common/Widgets/shimmer_effect.dart';
+import 'package:e_commerce_app/Common/Widgets/shimmer_effect.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_shop/screens/sign_in/sign_in_screen.dart';
+import 'package:e_commerce_app/screens/sign_in/sign_in_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -33,6 +31,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +70,14 @@ class _HomeState extends State<Home> {
               child: DrawerHeader(
                 padding: EdgeInsets.zero,
                 margin: EdgeInsets.zero,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [AppColors.primaryDark, AppColors.primaryLight],
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                    stops: [0, 1],
+                  ),
+                ),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
@@ -79,14 +86,6 @@ class _HomeState extends State<Home> {
                       fontStyle: FontStyles.montserratExtraBold18(),
                       marginTop: 0.0,
                     ),
-                  ),
-                ),
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [AppColors.primaryDark, AppColors.primaryLight],
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                    stops: [0, 1],
                   ),
                 ),
               ),
@@ -106,13 +105,13 @@ class _HomeState extends State<Home> {
                     leading: const Icon(Icons.settings,
                         color: AppColors.primaryLight),
                     title: Text(
-                      'Settings',
+                      'Cài đặt',
                       style: FontStyles.montserratRegular18(),
                     ),
                   ),
                   ListTile(
                     onTap: () {
-                      Navigator.pushNamed(context, AddCategoryScreen.routeName);
+                      Navigator.pushNamed(context, DashBoardScreen.routeName);
                     },
                     leading: const Icon(Icons.help_outline,
                         color: AppColors.primaryLight),
@@ -129,7 +128,7 @@ class _HomeState extends State<Home> {
                     leading: const Icon(Icons.login_outlined,
                         color: AppColors.primaryLight),
                     title: Text(
-                      'Sign in',
+                      'Đăng nhập',
                       style: FontStyles.montserratRegular18(),
                     ),
                   ),
@@ -179,7 +178,7 @@ class _HomeState extends State<Home> {
               top: screenHeight * .020.h,
               left: 20.0,
               child: Text(
-                'Fashion Sale',
+                'Sale',
                 style: FontStyles.montserratBold25()
                     .copyWith(color: AppColors.white),
               )),
@@ -189,7 +188,7 @@ class _HomeState extends State<Home> {
             child: Row(
               children: [
                 Text(
-                  'See More',
+                  'Xêm thêm',
                   style: FontStyles.montserratBold12().copyWith(
                     color: AppColors.secondary,
                   ),
@@ -210,7 +209,8 @@ class _HomeState extends State<Home> {
   Widget _buildCatalogue() {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, Catalogue.routeName, arguments: [true,true]);
+        Navigator.pushNamed(context, Catalogue.routeName,
+            arguments: [false, true, true]);
       },
       child: Container(
         margin: EdgeInsets.only(
@@ -221,7 +221,7 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Catalogue',
+                  'Danh mục',
                   style: FontStyles.montserratBold19().copyWith(
                     color: const Color(0xFF34283E),
                   ),
@@ -229,10 +229,10 @@ class _HomeState extends State<Home> {
                 GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context, Catalogue.routeName,
-                        arguments: [true, true]);
+                        arguments: [false, false]);
                   },
                   child: Text(
-                    'See All ',
+                    'Tất cả',
                     style: FontStyles.montserratBold12()
                         .copyWith(color: const Color(0xFF9B9B9B)),
                   ),
@@ -244,14 +244,25 @@ class _HomeState extends State<Home> {
               height: 97.h,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: DummyData.catalogueImagesLink.length,
+                itemCount: InitData.categories.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return CatalogueWidget(
-                    height: 88.h,
-                    width: 88.w,
-                    index: index,
-                  );
+                  return GestureDetector(
+                      onTap: () async {
+                        await InitData.getProductsByCateId(
+                            InitData.categories[index].cateId);
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushNamed(context, Catalogue.routeName,
+                            arguments: {
+                              'lstBol': [false, true, true],
+                              'cateId': InitData.categories[index].cateId
+                            });
+                      },
+                      child: CatalogueWidget(
+                        height: 88.h,
+                        width: 88.w,
+                        index: index,
+                      ));
                 },
               ),
             ),
@@ -278,22 +289,24 @@ class _HomeState extends State<Home> {
           SizedBox(
             child: GridView.builder(
               shrinkWrap: true,
-              itemCount: DummyData.productFeatured.length,
-              physics: const NeverScrollableScrollPhysics(),
+              itemCount: InitData.lstProductsFeatured.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisExtent: 270.0.h,
                   crossAxisSpacing: 10.0.w),
               itemBuilder: (_, index) {
                 return GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      await InitData.getLstProductRelated(
+                          InitData.lstProductsFeatured[index].cateId,InitData.lstProductsFeatured[index].productId);
+                      // ignore: use_build_context_synchronously
                       Navigator.pushNamed(context, ProductScreen.routeName,
-                          arguments: DummyData.productFeatured[index]);
+                          arguments: InitData.lstProductsFeatured[index]);
                     },
                     child: ItemWidget(
-                      image: DummyData.productFeatured[index].image,
-                      name:DummyData.productFeatured[index].name,
-                      price:DummyData.productFeatured[index].getPriceVND(),
+                      image: InitData.lstProductsFeatured[index].image,
+                      name: InitData.lstProductsFeatured[index].name,
+                      price: InitData.lstProductsFeatured[index].getPriceVND(),
                       favoriteIcon: true,
                     ));
               },
@@ -312,7 +325,7 @@ class _HomeState extends State<Home> {
         enableAutoSlider: true,
         slideBuilder: (index) {
           return CachedNetworkImage(
-            imageUrl: DummyData.sellerImagesLink[index],
+            imageUrl: InitData.sellerImagesLink[index],
             color: const Color.fromRGBO(42, 3, 75, 0.35),
             colorBlendMode: BlendMode.srcOver,
             fit: BoxFit.fill,
@@ -338,6 +351,6 @@ class _HomeState extends State<Home> {
           alignment: Alignment.bottomCenter,
           padding: EdgeInsets.only(bottom: 10.h, left: 20.0.w),
         ),
-        itemCount: DummyData.sellerImagesLink.length);
+        itemCount: InitData.sellerImagesLink.length);
   }
 }

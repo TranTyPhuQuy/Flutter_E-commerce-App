@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:smart_shop/components/custom_surfix_icon.dart';
-import 'package:smart_shop/components/form_error.dart';
-import 'package:smart_shop/helper/keyboard.dart';
-import 'package:smart_shop/screens/forgot_password/forgot_password_screen.dart';
-import 'package:smart_shop/screens/login_success/login_success_screen.dart';
+import 'package:e_commerce_app/components/custom_surfix_icon.dart';
+import 'package:e_commerce_app/components/form_error.dart';
+import 'package:e_commerce_app/helper/keyboard.dart';
+import 'package:e_commerce_app/screens/forgot_password/forgot_password_screen.dart';
+import 'package:e_commerce_app/screens/login_success/login_success_screen.dart';
 import 'package:http/http.dart' as http;
-import 'package:smart_shop/utils/baseurl.dart';
+import 'package:e_commerce_app/utils/baseurl.dart';
 
 import '../../../components/default_button.dart';
 import '../../../constants.dart';
@@ -17,7 +17,7 @@ class SignForm extends StatefulWidget {
   const SignForm({Key? key}) : super(key: key);
 
   @override
-  _SignFormState createState() => _SignFormState();
+  State<SignForm> createState() => _SignFormState();
 }
 
 class _SignFormState extends State<SignForm> {
@@ -70,7 +70,7 @@ class _SignFormState extends State<SignForm> {
                 onTap: () => Navigator.pushNamed(
                     context, ForgotPasswordScreen.routeName),
                 child: const Text(
-                  "Forgot Password",
+                  "Quên mật khẩu",
                   style: TextStyle(decoration: TextDecoration.underline),
                 ),
               )
@@ -79,11 +79,10 @@ class _SignFormState extends State<SignForm> {
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
-            text: "Continue",
+            text: "Tiếp tục",
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // if all are valid then go to success screen
                 KeyboardUtil.hideKeyboard(context);
                 LoginUser();
               }
@@ -117,11 +116,8 @@ class _SignFormState extends State<SignForm> {
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "Password",
-        hintText: "Enter your password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
+        labelText: "Mật khẩu",
+        hintText: "Nhập mật khẩu",floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
       ),
     );
@@ -151,14 +147,13 @@ class _SignFormState extends State<SignForm> {
       },
       decoration: const InputDecoration(
         labelText: "Email",
-        hintText: "Enter your email",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
+        hintText: "Nhập địa chỉ email",
+         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
       ),
     );
   }
+  // ignore: non_constant_identifier_names
   Future LoginUser() async {
 
     Map mapeddate = {
@@ -168,23 +163,42 @@ class _SignFormState extends State<SignForm> {
 
     print("JSON DATA: ${mapeddate}");
 
-    http.Response response = await http.post(Uri.parse(baseUrl+"login"),body: mapeddate);
+    http.Response response = await http.post(Uri.parse("${baseUrl}login"),body: mapeddate);
 
 
-    // Check if the response is successful
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       print("DATA: ${data}");
-      // Check if the data contains userId
       if (data['userId'] !='') {
+        // ignore: use_build_context_synchronously
         Navigator.pushNamed(context, LoginSuccessScreen.routeName);
       } else {
-        // Show an error message
+        // ignore: use_build_context_synchronously
+        showSuccessDialog(context, 'Đăng nhập thất bại', 'Sai tài khoản hoặc mật khẩu');
         print("Invalid email or password");
       }
     } else {
-      // Show an error message
+        // ignore: use_build_context_synchronously
+        showSuccessDialog(context, 'Đăng nhập thất bại', 'Lỗi kết nối với máy chủ');
       print("Something went wrong");
     }
+  }
+  void showSuccessDialog(BuildContext context, title, content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: <Widget>[
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Đóng'))
+          ],
+        );
+      },
+    );
   }
 }

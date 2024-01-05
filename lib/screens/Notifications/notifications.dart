@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop/Common/Widgets/custom_app_bar.dart';
-import 'package:smart_shop/Screens/Notifications/widgets/notification_item.dart';
+import 'package:e_commerce_app/Common/Widgets/custom_app_bar.dart';
+import 'package:e_commerce_app/Screens/Notifications/widgets/notification_item.dart';
 import 'dart:io' as plateform;
 
 class NotificationScreen extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop/Common/Widgets/gradient_header.dart';
-import 'package:smart_shop/Utils/app_colors.dart';
+import 'package:e_commerce_app/Common/Widgets/gradient_header.dart';
+import 'package:e_commerce_app/Utils/app_colors.dart';
 
 class Settings extends StatelessWidget {
   static const String routeName = 'settings';

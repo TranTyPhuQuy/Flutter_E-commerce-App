@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:smart_shop/size_config.dart';
+import 'package:e_commerce_app/size_config.dart';
 
 class FormError extends StatelessWidget {
   const FormError({
@@ -21,15 +21,15 @@ class FormError extends StatelessWidget {
   Row formErrorText({String error=""}) {
     return Row(
       children: [
-        SvgPicture.asset(
-          "assets/icons/Error.svg",
-          height: getProportionateScreenWidth(14),
-          width: getProportionateScreenWidth(14),
-        ),
-        SizedBox(
-          width: getProportionateScreenWidth(10),
-        ),
-        Text(error),
+        // SvgPicture.asset(
+        //   "assets/icons/Error.svg",
+        //   height: getProportionateScreenWidth(14),
+        //   width: getProportionateScreenWidth(14),
+        // ),
+        // SizedBox(
+        //   width: getProportionateScreenWidth(10),
+        // ),
+        Text(error, selectionColor: Colors.red,),
       ],
     );
   }

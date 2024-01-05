@@ -1,13 +1,15 @@
-import 'dart:io';
-
+import 'package:e_commerce_app/common/Widgets/cart_tile.dart';
+import 'package:e_commerce_app/helper/format_price.dart';
+import 'package:e_commerce_app/models/carrt.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_shop/Common/Widgets/app_button.dart';
-import 'package:smart_shop/Common/Widgets/cart_tile.dart';
-import 'package:smart_shop/Common/Widgets/custom_app_bar.dart';
-import 'package:smart_shop/Screens/CheckOut/check_out.dart';
-import 'package:smart_shop/Utils/app_colors.dart';
-import 'package:smart_shop/Utils/font_styles.dart';
+import 'package:e_commerce_app/Common/Widgets/app_button.dart';
+import 'package:e_commerce_app/Common/Widgets/custom_app_bar.dart';
+import 'package:e_commerce_app/Screens/CheckOut/check_out.dart';
+import 'package:e_commerce_app/Utils/app_colors.dart';
+import 'package:e_commerce_app/Utils/font_styles.dart';
+import 'package:provider/provider.dart';
 
 class Cart extends StatelessWidget {
   static const String routeName = 'cart';
@@ -29,12 +31,10 @@ class Cart extends StatelessWidget {
           Size(double.infinity, MediaQuery.of(context).size.height * .20.h),
       child: CustomAppBar(
         isHome: false,
-        title: 'Cart',
+        title: 'Giỏ hàng',
         fixedHeight: 88.0.h,
         enableSearchField: false,
-        leadingIcon:  Platform.isIOS
-            ? Icons.arrow_back_ios
-            : Icons.arrow_back,
+        leadingIcon: kIsWeb ? Icons.arrow_back : Icons.arrow_back_ios,
         leadingOnTap: () {
           Navigator.pop(context);
         },
@@ -44,22 +44,30 @@ class Cart extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     return Container(
-      color: AppColors.white,
-      child: ListView.separated(
-        itemCount: 3,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return Container(
-            color: AppColors.white,
-            margin: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 10.0.h),
-            child: const CartTile(),
-          );
-        },
-        separatorBuilder: (context, index) {
-          return const Divider();
-        },
-      ),
-    );
+        color: AppColors.white,
+        child: Consumer<Cartt>(
+          builder: (context, value, child) {
+            return ListView.separated(
+              itemCount: value.getCarts().length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Container(
+                  color: AppColors.white,
+                  margin: EdgeInsets.symmetric(
+                      horizontal: 20.0.w, vertical: 10.0.h),
+                  child: CartTile(
+                      product: value.getCarts()[index].getProduct(),
+                      quantity: value.getCarts()[index].getQuantity(),
+                      favoriteIcon: true),
+                      
+                );
+              },
+              separatorBuilder: (context, index) {
+                return const Divider();
+              },
+            );
+          },
+        ));
   }
 
   Widget _buildBottomSheet(BuildContext context) {
@@ -82,15 +90,17 @@ class Cart extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Total price', style: FontStyles.montserratBold19()),
-                Text('\$239.98', style: FontStyles.montserratBold19()),
+                Text('Tổng tiền', style: FontStyles.montserratBold19()),
+                Consumer<Cartt>(builder: (context, value, child) {
+                  return Text(FormartPrice.getPriceVND(value.getTotalPrice()), style: FontStyles.montserratBold19());
+                })
               ],
             ),
           ),
           Container(
             margin: EdgeInsets.only(bottom: 10.0.h),
             child: AppButton.button(
-              text: 'Check Out',
+              text: 'Thanh toán',
               color: AppColors.secondary,
               height: 48.h,
               width: size.width - 20.w,
