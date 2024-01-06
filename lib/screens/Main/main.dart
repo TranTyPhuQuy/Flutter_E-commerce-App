@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/helper/format_price.dart';
 import 'package:e_commerce_app/models/carrt.dart';
+import 'package:e_commerce_app/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:e_commerce_app/Screens/Cart/cart.dart';
@@ -133,31 +134,37 @@ class _MainState extends State<Main> {
                           ],
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            currentIndex = 3;
-                          });
+                      Consumer<AuthProvider>(
+                        builder: (context, value, child) {
+                          return value.getLogin()
+                              ? GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      currentIndex = 3;
+                                    });
+                                  },
+                                  child: Column(
+                                    children: [
+                                      Icon(
+                                        Icons.person_outline,
+                                        color: currentIndex == 3
+                                            ? AppColors.primaryLight
+                                            : Colors.grey,
+                                      ),
+                                      Text(
+                                        'Profile',
+                                        style: TextStyle(
+                                          color: currentIndex == 3
+                                              ? Colors.black
+                                              : AppColors.textLightColor,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : Container(); // or replace with your placeholder widget
                         },
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.person_outline,
-                              color: currentIndex == 3
-                                  ? AppColors.primaryLight
-                                  : Colors.grey,
-                            ),
-                            Text(
-                              'Profile',
-                              style: TextStyle(
-                                color: currentIndex == 3
-                                    ? Colors.black
-                                    : AppColors.textLightColor,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -199,23 +206,25 @@ class _MainState extends State<Main> {
                           size: 21.0,
                         ),
                         title:
-                          Consumer<Cartt>(builder: (context, value, child) {
-                            return RichText(
-                              text: TextSpan(
-                                text: '${FormartPrice.getPriceVND(value.getTotalPrice())}\n',
-                                style: FontStyles.montserratBold17().copyWith(
-                                    fontSize: 11.0, color: AppColors.white),
-                                children: [
-                                  TextSpan(
-                                    text: '${value.getCounter().toString()} Sản phẩm',
-                                    style: FontStyles.montserratRegular14()
-                                        .copyWith(
-                                            fontSize: 11.0,
-                                            color: AppColors.white),
-                                  )
-                                ],
-                              ),
-                            );
+                            Consumer<Cartt>(builder: (context, value, child) {
+                          return RichText(
+                            text: TextSpan(
+                              text:
+                                  '${FormartPrice.getPriceVND(value.getTotalPrice())}\n',
+                              style: FontStyles.montserratBold17().copyWith(
+                                  fontSize: 11.0, color: AppColors.white),
+                              children: [
+                                TextSpan(
+                                  text:
+                                      '${value.getCounter().toString()} Sản phẩm',
+                                  style: FontStyles.montserratRegular14()
+                                      .copyWith(
+                                          fontSize: 11.0,
+                                          color: AppColors.white),
+                                )
+                              ],
+                            ),
+                          );
                         }))),
               )),
         ],

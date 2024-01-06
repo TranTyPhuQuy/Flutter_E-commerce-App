@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/admin/Provider/categories_provider.dart';
 import 'package:e_commerce_app/admin/Provider/products_provider.dart';
 import 'package:e_commerce_app/models/carrt.dart';
+import 'package:e_commerce_app/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,8 @@ void main() {
           ChangeNotifierProvider(create: (ctx) => CartProvider()),
           ChangeNotifierProvider(create: (ctx) => CategoriesAdmin()),
           ChangeNotifierProvider(create: (ctx) => ProductsAdmin()),
-          ChangeNotifierProvider(create: (ctx) => Cartt())
+          ChangeNotifierProvider(create: (ctx) => Cartt()),
+          ChangeNotifierProvider(create: (ctx) => AuthProvider())
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

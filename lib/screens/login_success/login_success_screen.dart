@@ -8,12 +8,8 @@ class LoginSuccessScreen extends StatelessWidget {
   const LoginSuccessScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const SizedBox(),
-        title: const Text("Đăng nhập thành công"),
-      ),
-      body: const Body(),
+    return const Scaffold(
+      body: Body(),
     );
   }
 }

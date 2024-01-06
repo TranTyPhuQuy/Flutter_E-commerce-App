@@ -5,6 +5,7 @@ import 'package:e_commerce_app/admin/screens/Products/all_products_screen.dart';
 import 'package:e_commerce_app/admin/screens/Categories/update_category_screen.dart';
 import 'package:e_commerce_app/admin/screens/Products/update_product_screen.dart';
 import 'package:e_commerce_app/admin/screens/dashboard_screen.dart';
+import 'package:e_commerce_app/screens/complete_profile/complete_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:e_commerce_app/Screens/Cart/cart.dart';
@@ -14,11 +15,8 @@ import 'package:e_commerce_app/Screens/Favorite/favorite.dart';
 import 'package:e_commerce_app/Screens/Filter/filter.dart';
 import 'package:e_commerce_app/Screens/Home/home.dart';
 import 'package:e_commerce_app/Screens/Items/items.dart';
-import 'package:e_commerce_app/Screens/Login/phone_screen.dart';
-import 'package:e_commerce_app/Screens/Login/verification_screen.dart';
 import 'package:e_commerce_app/Screens/Main/main.dart';
 import 'package:e_commerce_app/Screens/Notifications/notifications.dart';
-import 'package:e_commerce_app/Screens/Onboarding/onboarding.dart';
 import 'package:e_commerce_app/Screens/Orders/order.dart';
 import 'package:e_commerce_app/Screens/PrivacyPolicy/privacy_policy.dart';
 import 'package:e_commerce_app/Screens/Profile/profile.dart';
@@ -33,9 +31,6 @@ import 'package:e_commerce_app/screens/splash/splash_screen.dart';
 
 class AppConstants {
   static Map<String, Widget Function(dynamic)> appRoutes = {
-    '/': (_) => const OnBoarding(),
-    Login.routeName: (_) => const Login(),
-    Verification.routeName: (_) => const Verification(),
     Home.routeName: (_) => const Home(),
     Main.routeName: (_) => const Main(),
     Catalogue.routeName: (_) => const Catalogue(),
@@ -49,7 +44,6 @@ class AppConstants {
     Settings.routeName: (_) => const Settings(),
     Orders.routeName: (_) => const Orders(),
     PrivacyPolicy.routeName: (_) => const PrivacyPolicy(),
-    OnBoarding.routeName: (_) => const OnBoarding(),
     NotificationScreen.routeName: (_) => const NotificationScreen(),
     ShippingAddress.routeName: (_) => const ShippingAddress(),
     SignInScreen.routeName: (_) => const SignInScreen(),
@@ -63,7 +57,8 @@ class AppConstants {
     ALLProductsScreen.routeName: (_) => const ALLProductsScreen(),
     UpdateCategoryScreen.routeName: (_) => const UpdateCategoryScreen(),
     UpdateProductScreen.routeName: (_) => const UpdateProductScreen(),
-    AddProductScreen.routeName: (_) => const AddProductScreen()
+    AddProductScreen.routeName: (_) => const AddProductScreen(),
+    CompleteProfileScreen.routeName:(_) => const CompleteProfileScreen()
   };
 
   static setSystemStyling() {

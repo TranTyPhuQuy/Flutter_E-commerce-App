@@ -22,7 +22,7 @@ class Body extends StatelessWidget {
             children: [
               SizedBox(height: SizeConfig.screenHeight! * 0.04),
               Text(
-                "Forgot Password",
+                "Quên mật khẩu",
                 style: TextStyle(
                   fontSize: getProportionateScreenWidth(28),
                   color: Colors.black,
@@ -30,7 +30,7 @@ class Body extends StatelessWidget {
                 ),
               ),
               const Text(
-                "Please enter your email and we will send \nyou a link to return to your account",
+                "Vui lòng nhập địa chỉ email của bạn/n chúng tôi sẽ gửi mã xác thực tới email của bạn",
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: SizeConfig.screenHeight! * 0.1),
@@ -44,8 +44,10 @@ class Body extends StatelessWidget {
 }
 
 class ForgotPassForm extends StatefulWidget {
+  const ForgotPassForm({super.key});
+
   @override
-  _ForgotPassFormState createState() => _ForgotPassFormState();
+  State<ForgotPassForm> createState() => _ForgotPassFormState();
 }
 
 class _ForgotPassFormState extends State<ForgotPassForm> {
@@ -72,7 +74,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                   errors.remove(kInvalidEmailError);
                 });
               }
-              return null;
+              return;
             },
             validator: (value) {
               if (value!.isEmpty && !errors.contains(kEmailNullError)) {
@@ -89,7 +91,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
             },
             decoration: const InputDecoration(
               labelText: "Email",
-              hintText: "Enter your email",
+              hintText: "Nhập địa chỉ email",
               // If  you are using latest version of flutter then lable text and hint text shown like this
               // if you r using flutter less then 1.20.* then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -100,7 +102,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           FormError(errors: errors),
           SizedBox(height: SizeConfig.screenHeight! * 0.1),
           DefaultButton(
-            text: "Continue",
+            text: "Tiếp tục",
             press: () {
               if (_formKey.currentState!.validate()) {
                 // Do what you want to do

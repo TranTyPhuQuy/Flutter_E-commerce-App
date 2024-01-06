@@ -10,14 +10,14 @@ import 'package:e_commerce_app/utils/baseurl.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
-class SignUpForm extends StatefulWidget {
-  const SignUpForm({Key? key}) : super(key: key);
+class ChangePasswordForm extends StatefulWidget {
+  const ChangePasswordForm({Key? key}) : super(key: key);
 
   @override
-  State<SignUpForm> createState() => _SignUpFormState();
+  State<ChangePasswordForm> createState() => _ChangePasswordFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _ChangePasswordFormState extends State<ChangePasswordForm> {
   final _formKey = GlobalKey<FormState>();
   late String email;
   late String password;
@@ -49,7 +49,7 @@ class _SignUpFormState extends State<SignUpForm> {
       key: _formKey,
       child: Column(
         children: [
-          buildEmailFormField(),
+          buildOldPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
@@ -95,7 +95,7 @@ class _SignUpFormState extends State<SignUpForm> {
       },
       decoration: const InputDecoration(
         labelText: "Confirm Password",
-        hintText: "Nhập lại mậy khẩu",
+        hintText: "Nhập lại mật khẩu",
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
     );
@@ -125,37 +125,32 @@ class _SignUpFormState extends State<SignUpForm> {
       },
       decoration: const InputDecoration(
         labelText: "Password",
-        hintText: "Nhập mật khẩu",
+        hintText: "Nhập mật khẩu mới",
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
     );
   }
 
-  TextFormField buildEmailFormField() {
+  TextFormField buildOldPasswordFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) => email = newValue!,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kEmailNullError);
-        } else if (emailValidatorRegExp.hasMatch(value)) {
-          removeError(error: kInvalidEmailError);
+          removeError(error: kPassNullError);
         }
         return;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kEmailNullError);
+          addError(error: kPassNullError);
           return "";
-        } else if (!emailValidatorRegExp.hasMatch(value)) {
-          addError(error: kInvalidEmailError);
-          return "";
-        }
+        } 
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "Email",
-        hintText: "Nhập địa chỉ email",floatingLabelBehavior: FloatingLabelBehavior.always,
+        labelText: "Mật khẩu cũ",
+        hintText: "Nhập mật khẩu cũ",floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
       ),
     );

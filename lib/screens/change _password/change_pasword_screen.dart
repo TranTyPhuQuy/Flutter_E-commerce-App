@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'components/body.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
-  static String routeName = "forgot_password";
+class ChangePassword extends StatelessWidget {
+  static String routeName = "sign_up";
 
-  const ForgotPasswordScreen({Key? key}) : super(key: key);
+  const ChangePassword({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Đổi mật khẩu"),
+        // title: const Text("Sign Up"),
       ),
       body: const Body(),
     );

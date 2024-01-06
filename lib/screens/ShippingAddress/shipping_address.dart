@@ -22,7 +22,7 @@ class ShippingAddress extends StatelessWidget {
           Size(double.infinity, MediaQuery.of(context).size.height * .20),
       child: CustomAppBar(
         isHome: false,
-        title: 'Shipping Address',
+        title: 'Địa chỉ giao hàng',
         fixedHeight: 88.0,
         enableSearchField: false,
         leadingIcon: Icons.arrow_back,

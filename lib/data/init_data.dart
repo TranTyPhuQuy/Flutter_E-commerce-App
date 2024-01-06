@@ -9,10 +9,10 @@ import 'package:http/http.dart' as http;
 
 class InitData {
   static final List<String> sellerImagesLink = [
-    'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
-    'https://images.unsplash.com/photo-1603400521630-9f2de124b33b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-    'https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80',
-    'https://images.unsplash.com/photo-1582719188393-bb71ca45dbb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+    "https://theme.hstatic.net/200000796751/1001150659/14/slide_3_mb.jpg?v=727",
+    "https://theme.hstatic.net/200000796751/1001150659/14/slide_4_img.jpg?v=727",
+    "https://theme.hstatic.net/200000796751/1001150659/14/slide_1_img.jpg?v=727",
+    "https://theme.hstatic.net/200000796751/1001150659/14/slide_2_img.jpg?v=727"
   ];
 
   static final List<Categoryy> categories = [];
@@ -122,9 +122,9 @@ class InitData {
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-        print('getProductsByCateId: cateId ='+$cateId.toString());
+      print('getProductsByCateId: cateId =${$cateId}');
       for (var item in data) {
-        print('productId =' + item['productId'].toString());
+        print('productId =${item['productId']}');
         lstProductsByCateId.add(Product(
             productId: item['productId'],
             name: item['name'],

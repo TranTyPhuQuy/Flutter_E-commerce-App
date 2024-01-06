@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/admin/screens/dashboard_screen.dart';
 import 'package:e_commerce_app/data/init_data.dart';
+import 'package:e_commerce_app/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
 import 'package:e_commerce_app/Common/Widgets/app_title.dart';
@@ -16,6 +17,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/Common/Widgets/shimmer_effect.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:e_commerce_app/screens/sign_in/sign_in_screen.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -121,17 +123,22 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   ListTile(
-                    onTap: () {
-                      Navigator.pushReplacementNamed(
-                          context, SignInScreen.routeName);
-                    },
-                    leading: const Icon(Icons.login_outlined,
-                        color: AppColors.primaryLight),
-                    title: Text(
-                      'Đăng nhập',
-                      style: FontStyles.montserratRegular18(),
-                    ),
-                  ),
+                      onTap: () {
+                        Navigator.pushReplacementNamed(
+                            context, SignInScreen.routeName);
+                      },
+                      leading: const Icon(Icons.login_outlined,
+                          color: AppColors.primaryLight),
+                      title: Consumer<AuthProvider>(
+                        builder: (context, value, _) {
+                          return !value.getLogin()
+                              ? Text(
+                                  'Đăng nhập',
+                                  style: FontStyles.montserratRegular18(),
+                                )
+                              : const Text('');
+                        },
+                      )),
                 ],
               ),
             ),
@@ -160,10 +167,9 @@ class _HomeState extends State<Home> {
   }
 
   Widget _buildSellerCard() {
-    var screenHeight = MediaQuery.of(context).size.height;
     return Container(
       margin: EdgeInsets.only(left: 20.0.w, right: 20.w, top: 50.0.h),
-      height: 88.h,
+      height: 176.h,
       width: 343.w,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0.r),
@@ -174,33 +180,6 @@ class _HomeState extends State<Home> {
             borderRadius: BorderRadius.circular(10.0.r),
             child: makeSlider(),
           ),
-          Positioned(
-              top: screenHeight * .020.h,
-              left: 20.0,
-              child: Text(
-                'Sale',
-                style: FontStyles.montserratBold25()
-                    .copyWith(color: AppColors.white),
-              )),
-          Positioned(
-            top: screenHeight * .070.h,
-            left: 20.0.w,
-            child: Row(
-              children: [
-                Text(
-                  'Xêm thêm',
-                  style: FontStyles.montserratBold12().copyWith(
-                    color: AppColors.secondary,
-                  ),
-                ),
-                Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 12.0.h,
-                  color: AppColors.secondary,
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
@@ -208,10 +187,6 @@ class _HomeState extends State<Home> {
 
   Widget _buildCatalogue() {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, Catalogue.routeName,
-            arguments: [false, true, true]);
-      },
       child: Container(
         margin: EdgeInsets.only(
             top: 25.0.h, left: 20.h, right: 20.0.h, bottom: 17.h),
@@ -227,9 +202,14 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    await InitData.getProductsByCateId(-1);
+                    // ignore: use_build_context_synchronously
                     Navigator.pushNamed(context, Catalogue.routeName,
-                        arguments: [false, false]);
+                        arguments: {
+                          'lstBol': [false, true, true],
+                          'cateId': -1
+                        });
                   },
                   child: Text(
                     'Tất cả',
@@ -298,7 +278,8 @@ class _HomeState extends State<Home> {
                 return GestureDetector(
                     onTap: () async {
                       await InitData.getLstProductRelated(
-                          InitData.lstProductsFeatured[index].cateId,InitData.lstProductsFeatured[index].productId);
+                          InitData.lstProductsFeatured[index].cateId,
+                          InitData.lstProductsFeatured[index].productId);
                       // ignore: use_build_context_synchronously
                       Navigator.pushNamed(context, ProductScreen.routeName,
                           arguments: InitData.lstProductsFeatured[index]);

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/Utils/app_colors.dart';
-
 class AppTheme {
   static ColorScheme light = const ColorScheme.light(
     primary: AppColors.primaryLight,
@@ -8,7 +7,6 @@ class AppTheme {
     onPrimary: AppColors.white,
     onSecondary: AppColors.white,
     background: AppColors.whiteLight,
-
   );
 
   static ThemeData lightTheme = ThemeData(
@@ -26,3 +24,4 @@ class AppTheme {
     ),
   );
 }
+

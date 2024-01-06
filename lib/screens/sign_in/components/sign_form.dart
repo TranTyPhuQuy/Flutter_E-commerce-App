@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:e_commerce_app/models/user.dart';
+import 'package:e_commerce_app/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/components/custom_surfix_icon.dart';
 import 'package:e_commerce_app/components/form_error.dart';
@@ -8,6 +10,7 @@ import 'package:e_commerce_app/screens/forgot_password/forgot_password_screen.da
 import 'package:e_commerce_app/screens/login_success/login_success_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:e_commerce_app/utils/baseurl.dart';
+import 'package:provider/provider.dart';
 
 import '../../../components/default_button.dart';
 import '../../../constants.dart';
@@ -27,7 +30,7 @@ class _SignFormState extends State<SignForm> {
   bool remember = false;
   final List<String> errors = [];
 
-  void addError({String error=""}) {
+  void addError({String error = ""}) {
     if (!errors.contains(error)) {
       setState(() {
         errors.add(error);
@@ -35,7 +38,7 @@ class _SignFormState extends State<SignForm> {
     }
   }
 
-  void removeError({String error=""}) {
+  void removeError({String error = ""}) {
     if (errors.contains(error)) {
       setState(() {
         errors.remove(error);
@@ -117,7 +120,8 @@ class _SignFormState extends State<SignForm> {
       },
       decoration: const InputDecoration(
         labelText: "Mật khẩu",
-        hintText: "Nhập mật khẩu",floatingLabelBehavior: FloatingLabelBehavior.always,
+        hintText: "Nhập mật khẩu",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
       ),
     );
@@ -148,41 +152,44 @@ class _SignFormState extends State<SignForm> {
       decoration: const InputDecoration(
         labelText: "Email",
         hintText: "Nhập địa chỉ email",
-         floatingLabelBehavior: FloatingLabelBehavior.always,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
       ),
     );
   }
+
   // ignore: non_constant_identifier_names
   Future LoginUser() async {
-
-    Map mapeddate = {
-      'email': email,
-      'password': password
-    };
+    Map mapeddate = {'email': email, 'password': password};
 
     print("JSON DATA: ${mapeddate}");
 
-    http.Response response = await http.post(Uri.parse("${baseUrl}login"),body: mapeddate);
-
+    http.Response response =
+        await http.post(Uri.parse("${baseUrl}login"), body: mapeddate);
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       print("DATA: ${data}");
-      if (data['userId'] !='') {
+      if (data['userId'] != '') {
+        // ignore: use_build_context_synchronously
+        Provider.of<AuthProvider>(context, listen: false).login(User(
+            data['userId'], data['userName'], data['email'], data['roleId']));
         // ignore: use_build_context_synchronously
         Navigator.pushNamed(context, LoginSuccessScreen.routeName);
       } else {
         // ignore: use_build_context_synchronously
-        showSuccessDialog(context, 'Đăng nhập thất bại', 'Sai tài khoản hoặc mật khẩu');
+        showSuccessDialog(
+            context, 'Đăng nhập thất bại', 'Sai tài khoản hoặc mật khẩu');
         print("Invalid email or password");
       }
     } else {
-        // ignore: use_build_context_synchronously
-        showSuccessDialog(context, 'Đăng nhập thất bại', 'Lỗi kết nối với máy chủ');
+      // ignore: use_build_context_synchronously
+      showSuccessDialog(
+          context, 'Đăng nhập thất bại', 'Lỗi kết nối với máy chủ');
       print("Something went wrong");
     }
   }
+
   void showSuccessDialog(BuildContext context, title, content) {
     showDialog(
       context: context,

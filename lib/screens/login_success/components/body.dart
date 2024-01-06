@@ -29,7 +29,7 @@ class Body extends StatelessWidget {
         SizedBox(
           width: SizeConfig.screenWidth! * 0.6,
           child: DefaultButton(
-            text: "Quay về trang chủ",
+            text: "Trang chủ",
             press: () {
               Navigator.pushNamed(context, Main.routeName);
             },

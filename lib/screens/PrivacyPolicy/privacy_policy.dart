@@ -39,7 +39,7 @@ class PrivacyPolicy extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Privacy and Policies',
+              'Quyền riêng tư và chính sách',
               style: FontStyles.montserratBold17().copyWith(
                   fontSize: 18.0, decoration: TextDecoration.underline),
             ),
